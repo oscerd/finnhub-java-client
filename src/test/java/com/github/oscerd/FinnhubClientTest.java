@@ -23,6 +23,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import com.github.oscerd.finnhub.client.FinnhubClient;
+import com.github.oscerd.finnhub.model.CompanyProfile;
 import com.github.oscerd.finnhub.model.Quote;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -37,6 +38,14 @@ public class FinnhubClientTest {
     	FinnhubClient client = new FinnhubClient(token);
         Quote quote = client.getQuote("IBM");
         assertNotNull(quote);
+    }
+    
+    @Test
+    void invocationCompanyProfile() throws ClientProtocolException, IOException {
+    	FinnhubClient client = new FinnhubClient(token);
+        CompanyProfile companyProfile = client.getCompanyProfile("IBM");
+        System.err.println(companyProfile.toString());
+        assertNotNull(companyProfile);
     }
 
 }

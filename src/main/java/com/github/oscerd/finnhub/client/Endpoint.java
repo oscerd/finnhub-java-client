@@ -18,7 +18,8 @@ package com.github.oscerd.finnhub.client;
 
 public enum Endpoint {
 	
-    QUOTE("https://finnhub.io/api/v1/quote");
+    QUOTE("https://finnhub.io/api/v1/quote"),
+    COMPANY_PROFILE("https://finnhub.io/api/v1/stock/profile2");	
 
     private String url;
 

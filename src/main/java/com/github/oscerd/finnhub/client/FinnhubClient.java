@@ -26,6 +26,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.oscerd.finnhub.model.CompanyProfile;
 import com.github.oscerd.finnhub.model.Quote;
 
 public class FinnhubClient {
@@ -77,5 +78,16 @@ public class FinnhubClient {
 		}
 
 		return objectMapper.readValue(result, Quote.class);
+	}
+	
+	public CompanyProfile getCompanyProfile(String symbol) throws ClientProtocolException, IOException {
+		HttpGet get = new HttpGet(Endpoint.COMPANY_PROFILE.url() + "?token=" + token + "&symbol=" + symbol);
+
+		String result = null;
+		try (CloseableHttpResponse response = httpClient.execute(get)) {
+			result = EntityUtils.toString(response.getEntity());
+		}
+
+		return objectMapper.readValue(result, CompanyProfile.class);
 	}
 }
