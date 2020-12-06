@@ -17,6 +17,9 @@
 package com.github.oscerd;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import org.apache.http.client.ClientProtocolException;
 import org.junit.jupiter.api.Disabled;
@@ -25,7 +28,9 @@ import org.junit.jupiter.api.Test;
 import com.github.oscerd.finnhub.client.FinnhubClient;
 import com.github.oscerd.finnhub.model.CompanyProfile;
 import com.github.oscerd.finnhub.model.Quote;
+import com.github.oscerd.finnhub.model.Symbol;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @Disabled("Provide your token to run test")
@@ -44,8 +49,14 @@ public class FinnhubClientTest {
     void invocationCompanyProfile() throws ClientProtocolException, IOException {
     	FinnhubClient client = new FinnhubClient(token);
         CompanyProfile companyProfile = client.getCompanyProfile("IBM");
-        System.err.println(companyProfile.toString());
         assertNotNull(companyProfile);
     }
-
+    
+    @Test
+    void invocationSymbols() throws ClientProtocolException, IOException {
+    	FinnhubClient client = new FinnhubClient(token);
+        List<Symbol> symbols = client.getSymbols("US");
+        List<Symbol> t = symbols.stream().filter(s -> s.getDescription().contains("AMAZON")).collect(Collectors.toList());
+        assertEquals(1, t.size());
+    }
 }
