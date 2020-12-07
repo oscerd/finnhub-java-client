@@ -26,6 +26,7 @@ import org.junit.jupiter.api.Test;
 
 import com.github.oscerd.finnhub.client.FinnhubClient;
 import com.github.oscerd.finnhub.model.CompanyProfile;
+import com.github.oscerd.finnhub.model.Exchange;
 import com.github.oscerd.finnhub.model.Quote;
 import com.github.oscerd.finnhub.model.Symbol;
 
@@ -54,7 +55,7 @@ public class FinnhubClientTest {
     @Test
     void invocationSymbols() throws ClientProtocolException, IOException {
     	FinnhubClient client = new FinnhubClient(token);
-        List<Symbol> symbols = client.getSymbols("US");
+        List<Symbol> symbols = client.getSymbols(Exchange.US_EXCHANGES.toString());
         List<Symbol> t = symbols.stream().filter(s -> s.getDescription().contains("AMAZON")).collect(Collectors.toList());
         assertEquals(1, t.size());
     }
@@ -62,7 +63,7 @@ public class FinnhubClientTest {
     @Test
     void invocationSymbolsBD() throws ClientProtocolException, IOException {
     	FinnhubClient client = new FinnhubClient(token);
-        List<Symbol> symbols = client.getSymbols("BD");
+        List<Symbol> symbols = client.getSymbols(Exchange.BUDAPEST_STOCK_EXCHANGE.toString());
         List<Symbol> t = symbols.stream().collect(Collectors.toList());
         assertEquals(95, t.size());
     }

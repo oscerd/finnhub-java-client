@@ -29,6 +29,7 @@ import org.apache.http.util.EntityUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.oscerd.finnhub.model.CompanyProfile;
+import com.github.oscerd.finnhub.model.Exchange;
 import com.github.oscerd.finnhub.model.Quote;
 import com.github.oscerd.finnhub.model.Symbol;
 
@@ -95,7 +96,7 @@ public class FinnhubClient {
 	}
 	
 	public List<Symbol> getSymbols(String exchange) throws ClientProtocolException, IOException {
-		HttpGet get = new HttpGet(Endpoint.SYMBOL.url() + "?token=" + token + "&exchange=" + exchange);
+		HttpGet get = new HttpGet(Endpoint.SYMBOL.url() + "?token=" + token + "&exchange=" + Exchange.valueOf(exchange).code());
 
 		String result = null;
 		try (CloseableHttpResponse response = httpClient.execute(get)) {
