@@ -18,7 +18,6 @@ package com.github.oscerd;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.apache.http.client.ClientProtocolException;
@@ -36,7 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @Disabled("Provide your token to run test")
 public class FinnhubClientTest {
 	
-	String token = "your-token";
+	String token = "<your-token>";
 
     @Test
     void invocation() throws ClientProtocolException, IOException {
@@ -58,5 +57,13 @@ public class FinnhubClientTest {
         List<Symbol> symbols = client.getSymbols("US");
         List<Symbol> t = symbols.stream().filter(s -> s.getDescription().contains("AMAZON")).collect(Collectors.toList());
         assertEquals(1, t.size());
+    }
+    
+    @Test
+    void invocationSymbolsBD() throws ClientProtocolException, IOException {
+    	FinnhubClient client = new FinnhubClient(token);
+        List<Symbol> symbols = client.getSymbols("BD");
+        List<Symbol> t = symbols.stream().collect(Collectors.toList());
+        assertEquals(95, t.size());
     }
 }
