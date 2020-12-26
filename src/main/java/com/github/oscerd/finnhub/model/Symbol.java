@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "description", "displaySymbol", "symbol", "type", "currency" })
+@JsonPropertyOrder({ "description", "displaySymbol", "symbol", "type", "currency", "figi" })
 public class Symbol {
 
 	@JsonProperty("description")
@@ -34,6 +34,8 @@ public class Symbol {
 	private String type;
 	@JsonProperty("currency")
 	private String currency;
+	@JsonProperty("figi")
+	private String figi;
 
 	@JsonProperty("description")
 	public String getDescription() {
@@ -85,10 +87,20 @@ public class Symbol {
 		this.currency = currency;
 	}
 
+	@JsonProperty("figi")
+	public String getFigi() {
+		return figi;
+	}
+
+	@JsonProperty("figi")
+	public void setFigi(String figi) {
+		this.figi = figi;
+	}
+
 	@Override
 	public String toString() {
 		return "Symbol [description=" + description + ", displaySymbol=" + displaySymbol + ", symbol=" + symbol
-				+ ", type=" + type + ", currency=" + currency + "]";
+				+ ", type=" + type + ", currency=" + currency + ", figi=" + figi + "]";
 	}
 
 }
