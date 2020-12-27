@@ -56,15 +56,7 @@ public class FinnhubClientTest {
     void invocationSymbols() throws ClientProtocolException, IOException {
     	FinnhubClient client = new FinnhubClient(token);
         List<Symbol> symbols = client.getSymbols(Exchange.US_EXCHANGES.toString());
-        List<Symbol> t = symbols.stream().filter(s -> s.getDescription().contains("AMAZON")).collect(Collectors.toList());
+        List<Symbol> t = symbols.stream().filter(s -> s.getDescription().contains("AMAZON.COM")).collect(Collectors.toList());
         assertEquals(1, t.size());
-    }
-    
-    @Test
-    void invocationSymbolsBD() throws ClientProtocolException, IOException {
-    	FinnhubClient client = new FinnhubClient(token);
-        List<Symbol> symbols = client.getSymbols(Exchange.BUDAPEST_STOCK_EXCHANGE.toString());
-        List<Symbol> t = symbols.stream().collect(Collectors.toList());
-        assertEquals(95, t.size());
     }
 }
