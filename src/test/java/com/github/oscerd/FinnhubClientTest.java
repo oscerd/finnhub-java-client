@@ -21,8 +21,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.http.client.ClientProtocolException;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 
 import com.github.oscerd.finnhub.client.FinnhubClient;
 import com.github.oscerd.finnhub.model.CompanyProfile;
@@ -33,28 +33,28 @@ import com.github.oscerd.finnhub.model.Symbol;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@Disabled("Provide your token to run test")
 public class FinnhubClientTest {
 	
-	String token = "<your-token>";
-
     @Test
+    @EnabledIfEnvironmentVariable(named = "FINNHUB_TOKEN", matches = ".*")
     void invocation() throws ClientProtocolException, IOException {
-    	FinnhubClient client = new FinnhubClient(token);
+    	FinnhubClient client = new FinnhubClient(System.getenv("FINNHUB_TOKEN"));
         Quote quote = client.getQuote("IBM");
         assertNotNull(quote);
     }
     
     @Test
+    @EnabledIfEnvironmentVariable(named = "FINNHUB_TOKEN", matches = ".*")
     void invocationCompanyProfile() throws ClientProtocolException, IOException {
-    	FinnhubClient client = new FinnhubClient(token);
+    	FinnhubClient client = new FinnhubClient(System.getenv("FINNHUB_TOKEN"));
         CompanyProfile companyProfile = client.getCompanyProfile("IBM");
         assertNotNull(companyProfile);
     }
     
     @Test
+    @EnabledIfEnvironmentVariable(named = "FINNHUB_TOKEN", matches = ".*")
     void invocationSymbols() throws ClientProtocolException, IOException {
-    	FinnhubClient client = new FinnhubClient(token);
+    	FinnhubClient client = new FinnhubClient(System.getenv("FINNHUB_TOKEN"));
         List<Symbol> symbols = client.getSymbols(Exchange.US_EXCHANGES.toString());
         List<Symbol> t = symbols.stream().filter(s -> s.getDescription().contains("AMAZON.COM")).collect(Collectors.toList());
         assertEquals(1, t.size());
