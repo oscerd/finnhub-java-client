@@ -32,6 +32,7 @@ import com.github.oscerd.finnhub.model.CompanyProfile;
 import com.github.oscerd.finnhub.model.Exchange;
 import com.github.oscerd.finnhub.model.Quote;
 import com.github.oscerd.finnhub.model.Symbol;
+import com.github.oscerd.finnhub.model.SymbolLookup;
 
 public class FinnhubClient {
 
@@ -104,5 +105,16 @@ public class FinnhubClient {
 		}
 
 		return objectMapper.readValue(result, new TypeReference<List<Symbol>>(){});
+	}
+
+	public SymbolLookup searchSymbol(String query) throws ClientProtocolException, IOException {
+		HttpGet get = new HttpGet(Endpoint.SYMBOL_LOOKUP.url() + "?token=" + token + "&q=" + query);
+
+		String result = null;
+		try (CloseableHttpResponse response = httpClient.execute(get)) {
+			result = EntityUtils.toString(response.getEntity());
+		}
+
+		return objectMapper.readValue(result, SymbolLookup.class);
 	}
 }
