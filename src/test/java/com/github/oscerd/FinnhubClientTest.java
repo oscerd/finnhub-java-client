@@ -27,7 +27,7 @@ import com.github.oscerd.finnhub.client.FinnhubClient;
 import com.github.oscerd.finnhub.model.CompanyProfile;
 import com.github.oscerd.finnhub.model.Exchange;
 import com.github.oscerd.finnhub.model.Quote;
-import com.github.oscerd.finnhub.model.Symbol;
+import com.github.oscerd.finnhub.model.EnrichedSymbol;
 import com.github.oscerd.finnhub.model.SymbolLookup;
 
 import org.apache.http.client.ClientProtocolException;
@@ -56,9 +56,10 @@ public class FinnhubClientTest {
     @EnabledIfEnvironmentVariable(named = "FINNHUB_TOKEN", matches = ".*")
     void invocationSymbols() throws ClientProtocolException, IOException {
     	FinnhubClient client = new FinnhubClient(System.getenv("FINNHUB_TOKEN"));
-        List<Symbol> symbols = client.getSymbols(Exchange.US_EXCHANGES.toString());
-        List<Symbol> t = symbols.stream().filter(s -> s.getDescription().contains("AMAZON.COM")).collect(Collectors.toList());
+        List<EnrichedSymbol> symbols = client.getSymbols(Exchange.US_EXCHANGES.toString());
+        List<EnrichedSymbol> t = symbols.stream().filter(s -> s.getDescription().contains("AMAZON.COM")).collect(Collectors.toList());
         assertEquals(1, t.size());
+        System.err.println(t.toString());
     }
 
     @Test
