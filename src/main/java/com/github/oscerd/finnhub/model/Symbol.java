@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "description", "displaySymbol", "symbol", "type", "currency", "figi", "mic" })
+@JsonPropertyOrder({ "description", "displaySymbol", "symbol", "type" })
 public class Symbol {
 
 	@JsonProperty("description")
@@ -32,12 +32,6 @@ public class Symbol {
 	private String symbol;
 	@JsonProperty("type")
 	private String type;
-	@JsonProperty("currency")
-	private String currency;
-	@JsonProperty("figi")
-	private String figi;
-	@JsonProperty("mic")
-	private String mic;
 
 	@JsonProperty("description")
 	public String getDescription() {
@@ -79,40 +73,10 @@ public class Symbol {
 		this.type = type;
 	}
 
-	@JsonProperty("currency")
-	public String getCurrency() {
-		return currency;
-	}
-
-	@JsonProperty("currency")
-	public void setCurrency(String currency) {
-		this.currency = currency;
-	}
-
-	@JsonProperty("figi")
-	public String getFigi() {
-		return figi;
-	}
-
-	@JsonProperty("figi")
-	public void setFigi(String figi) {
-		this.figi = figi;
-	}
-
-	@JsonProperty("mic")
-	public String getMic() {
-		return mic;
-	}
-
-	@JsonProperty("mic")
-	public void setMic(String mic) {
-		this.mic = mic;
-	}
-
 	@Override
 	public String toString() {
 		return "Symbol [description=" + description + ", displaySymbol=" + displaySymbol + ", symbol=" + symbol
-				+ ", type=" + type + ", currency=" + currency + ", figi=" + figi + ", mic=" + mic + "]";
+				+ ", type=" + type + "]";
 	}
 
 }
