@@ -5,3 +5,4 @@ A simple Finnhub.io Java client supporting Symbols, CompanyProfile and Quote for
 This client is work in progress.
 
 
+
