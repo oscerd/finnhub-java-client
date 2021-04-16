@@ -40,6 +40,9 @@ public class FinnhubClient {
 	private String token;
 	private ObjectMapper objectMapper;
 
+	public FinnhubClient() {
+	}
+
 	public FinnhubClient(String token) {
 		this.token = token;
 		this.objectMapper = new ObjectMapper();
@@ -116,5 +119,36 @@ public class FinnhubClient {
 		}
 
 		return objectMapper.readValue(result, SymbolLookup.class);
+	}
+
+	public static class Builder {
+
+		private final FinnhubClient client;
+
+		public Builder() {
+			client = new FinnhubClient();
+		}
+
+		public Builder token(String token) {
+			client.setToken(token);
+			return this;
+		}
+
+		public Builder to(CloseableHttpClient httpClient) {
+			client.setHttpClient(httpClient);
+			return this;
+		}
+
+		public Builder mapper(ObjectMapper mapper) {
+			client.setObjectMapper(mapper);
+			return this;
+		}
+
+		public FinnhubClient build() {
+			if (client.getObjectMapper() == null) {
+				client.setObjectMapper(new ObjectMapper());
+			}
+			return client;
+		}
 	}
 }
