@@ -66,6 +66,6 @@ public class FinnhubClientTest {
     void invocationSymbolLookup() throws ClientProtocolException, IOException {
     	FinnhubClient client = new FinnhubClient(System.getenv("FINNHUB_TOKEN"));
         SymbolLookup lookup = client.searchSymbol("apple");
-        assertEquals(12, lookup.getCount());
+        assertEquals(22, lookup.getCount());
     }
 }

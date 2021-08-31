@@ -36,6 +36,10 @@ public class Quote {
 	private Integer previousClose;
 	@JsonProperty("t")
 	private String timestamp;
+	@JsonProperty("d")
+	private Float change;
+	@JsonProperty("dp")
+	private Float percentChange;
 
 	@JsonProperty("c")
 	public String getCurrentPrice() {
@@ -97,11 +101,37 @@ public class Quote {
 		this.timestamp = timestamp;
 	}
 
-	@Override
-	public String toString() {
-		return "Quote [currentPrice=" + currentPrice + ", highestPrice=" + highestPrice + ", lowestPrice=" + lowestPrice
-				+ ", openinngPrice=" + openinngPrice + ", previousClose=" + previousClose + ", timestamp=" + timestamp
-				+ "]";
+	@JsonProperty("d")
+	public Float getChange() {
+		return change;
 	}
 
+	@JsonProperty("d")
+	public void setChange(Float change) {
+		this.change = change;
+	}
+
+	@JsonProperty("dp")
+	public Float getPercentChange() {
+		return percentChange;
+	}
+
+	@JsonProperty("dp")
+	public void setPercentChange(Float percentChange) {
+		this.percentChange = percentChange;
+	}
+
+	@java.lang.Override
+	public java.lang.String toString() {
+		return "Quote{" +
+				"currentPrice='" + currentPrice + '\'' +
+				", highestPrice='" + highestPrice + '\'' +
+				", lowestPrice='" + lowestPrice + '\'' +
+				", openinngPrice='" + openinngPrice + '\'' +
+				", previousClose=" + previousClose +
+				", timestamp='" + timestamp + '\'' +
+				", change=" + change +
+				", percentChange=" + percentChange +
+				'}';
+	}
 }
