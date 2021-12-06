@@ -14,7 +14,7 @@
 
 	<groupId>com.github.oscerd</groupId>
 	<artifactId>finnhub-java-client</artifactId>
-	<version>0.1.0-SNAPSHOT</version>
+	<version>0.1.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Finnhub :: Java Client</name>
 	<description>Finnhub.io Java Client</description>
