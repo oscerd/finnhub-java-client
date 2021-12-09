@@ -19,6 +19,7 @@ package com.github.oscerd.finnhub.client;
 import java.io.IOException;
 import java.util.List;
 
+import com.github.oscerd.finnhub.model.Candle;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -87,7 +88,29 @@ public class FinnhubClient {
 
 		return objectMapper.readValue(result, Quote.class);
 	}
-	
+
+	/**
+	 *  Get the Stock Candle object for a date or a range.  Set startEpoch equal to the endEpoch for one day.
+	 * @param symbol Ticker symbol
+	 * @param resolution Supported resolution includes 1, 5, 15, 30, 60, D, W, M.
+	 * Some timeframes might not be available depending on the exchange.
+	 * @param startEpoch In seconds, not milliseconds.
+	 * @param endEpoch As above.
+	 * @return JSON object with arrays for the close, low, high, open, volume. status is a String.
+	 * @throws IOException
+	 */
+	public Candle getCandle(String symbol, String resolution, long startEpoch, long endEpoch) throws IOException {
+		HttpGet get = new HttpGet(Endpoint.CANDLE.url() + "?token=" + token
+				+ "&symbol=" + symbol.toUpperCase() + "&resolution=" + resolution + "&from=" + startEpoch + "&to=" + endEpoch);
+
+		String result = null;
+		try (CloseableHttpResponse response = httpClient.execute(get)) {
+			result = EntityUtils.toString(response.getEntity());
+		}
+
+		return objectMapper.readValue(result, Candle.class);
+	}
+
 	public CompanyProfile getCompanyProfile(String symbol) throws ClientProtocolException, IOException {
 		HttpGet get = new HttpGet(Endpoint.COMPANY_PROFILE.url() + "?token=" + token + "&symbol=" + symbol);
 

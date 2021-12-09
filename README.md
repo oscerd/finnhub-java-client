@@ -1,6 +1,6 @@
 ### Finnhub-java-client
 
-A simple Finnhub.io Java client supporting Symbols, CompanyProfile and Quote for the moment.
+A simple Finnhub.io Java client supporting Symbols, CompanyProfile, Quote and Stock Candles for the moment.
 
 This client is still work in progress.
 
