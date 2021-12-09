@@ -50,6 +50,6 @@ jobs:
             ${{ runner.os }}-maven-
       - name: build 
         env:
-          FINNHUB_TOKEN: ${{ secrets.finnhubToken }}
+          FINNHUB_TOKEN: ${{ secrets.FINNHUBTOKEN }}
         run: |
           ./mvnw clean install
