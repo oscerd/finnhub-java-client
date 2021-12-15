@@ -4,4 +4,4 @@ A simple Finnhub.io Java client supporting Symbols, CompanyProfile, Quote and St
 
 This client is still work in progress.
 
-The idea is to have some endpoint to be used in 0.1.0. Feedback are welcome and also contributions.
+Latest released version is 0.1.1
