@@ -70,11 +70,11 @@
 	</distributionManagement>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>4.5.13</version>
-		</dependency>
+               <dependency>
+                        <groupId>org.apache.httpcomponents.client5</groupId>
+                        <artifactId>httpclient5</artifactId>
+                        <version>5.1.2</version>
+                </dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
@@ -90,6 +90,12 @@
 			<artifactId>jackson-annotations</artifactId>
 			<version>2.12.1</version>
 		</dependency>
+                <dependency>
+                         <groupId>org.apache.logging.log4j</groupId>
+                         <artifactId>log4j-slf4j-impl</artifactId>
+                         <version>2.16.0</version>
+                         <scope>test</scope>
+                </dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
