@@ -22,7 +22,7 @@ import com.github.oscerd.finnhub.model.EnrichedSymbol;
 import com.github.oscerd.finnhub.model.Exchange;
 import com.github.oscerd.finnhub.model.Quote;
 import com.github.oscerd.finnhub.model.SymbolLookup;
-import org.apache.http.client.ClientProtocolException;
+import org.apache.hc.core5.http.ParseException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 
@@ -38,7 +38,7 @@ public class FinnhubClientBuilderTest {
 	
     @Test
     @EnabledIfEnvironmentVariable(named = "FINNHUB_TOKEN", matches = ".*")
-    void invocation() throws ClientProtocolException, IOException {
+    void invocation() throws ParseException, IOException {
         FinnhubClient client = new FinnhubClient.Builder().token(System.getenv("FINNHUB_TOKEN")).build();
         Quote quote = client.getQuote("IBM");
         assertNotNull(quote);
@@ -46,7 +46,7 @@ public class FinnhubClientBuilderTest {
     
     @Test
     @EnabledIfEnvironmentVariable(named = "FINNHUB_TOKEN", matches = ".*")
-    void invocationCompanyProfile() throws ClientProtocolException, IOException {
+    void invocationCompanyProfile() throws ParseException, IOException {
         FinnhubClient client = new FinnhubClient.Builder().token(System.getenv("FINNHUB_TOKEN")).build();
         CompanyProfile companyProfile = client.getCompanyProfile("IBM");
         assertNotNull(companyProfile);
@@ -54,7 +54,7 @@ public class FinnhubClientBuilderTest {
     
     @Test
     @EnabledIfEnvironmentVariable(named = "FINNHUB_TOKEN", matches = ".*")
-    void invocationSymbols() throws ClientProtocolException, IOException {
+    void invocationSymbols() throws ParseException, IOException {
         FinnhubClient client = new FinnhubClient.Builder().token(System.getenv("FINNHUB_TOKEN")).build();
         List<EnrichedSymbol> symbols = client.getSymbols(Exchange.US_EXCHANGES.toString());
         List<EnrichedSymbol> t = symbols.stream().filter(s -> s.getDescription().contains("AMAZON.COM")).collect(Collectors.toList());
@@ -63,7 +63,7 @@ public class FinnhubClientBuilderTest {
 
     @Test
     @EnabledIfEnvironmentVariable(named = "FINNHUB_TOKEN", matches = ".*")
-    void invocationSymbolLookup() throws ClientProtocolException, IOException {
+    void invocationSymbolLookup() throws ParseException, IOException {
         FinnhubClient client = new FinnhubClient.Builder().token(System.getenv("FINNHUB_TOKEN")).build();
         SymbolLookup lookup = client.searchSymbol("apple");
         assertEquals(22, lookup.getCount());

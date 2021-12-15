@@ -20,12 +20,13 @@ import java.io.IOException;
 import java.util.List;
 
 import com.github.oscerd.finnhub.model.Candle;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
+import org.apache.hc.client5.http.ClientProtocolException;
+import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.core5.http.ParseException;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -78,7 +79,7 @@ public class FinnhubClient {
 		this.httpClient = httpClient;
 	}
 
-	public Quote getQuote(String symbol) throws ClientProtocolException, IOException {
+	public Quote getQuote(String symbol) throws IOException, ParseException {
 		HttpGet get = new HttpGet(Endpoint.QUOTE.url() + "?token=" + token + "&symbol=" + symbol);
 
 		String result = null;
@@ -90,7 +91,7 @@ public class FinnhubClient {
 	}
 
 	/**
-	 *  Get the Stock Candle object for a date or a range.  Set startEpoch equal to the endEpoch for one day.
+	 *  Get the Stock Candle object for a date or a range. Set startEpoch equal to the endEpoch for one day.
 	 * @param symbol Ticker symbol
 	 * @param resolution Supported resolution includes 1, 5, 15, 30, 60, D, W, M.
 	 * Some timeframes might not be available depending on the exchange.
@@ -99,7 +100,7 @@ public class FinnhubClient {
 	 * @return JSON object with arrays for the close, low, high, open, volume. status is a String.
 	 * @throws IOException
 	 */
-	public Candle getCandle(String symbol, String resolution, long startEpoch, long endEpoch) throws IOException {
+	public Candle getCandle(String symbol, String resolution, long startEpoch, long endEpoch) throws IOException, ParseException {
 		HttpGet get = new HttpGet(Endpoint.CANDLE.url() + "?token=" + token
 				+ "&symbol=" + symbol.toUpperCase() + "&resolution=" + resolution + "&from=" + startEpoch + "&to=" + endEpoch);
 
@@ -111,7 +112,7 @@ public class FinnhubClient {
 		return objectMapper.readValue(result, Candle.class);
 	}
 
-	public CompanyProfile getCompanyProfile(String symbol) throws ClientProtocolException, IOException {
+	public CompanyProfile getCompanyProfile(String symbol) throws IOException, ParseException {
 		HttpGet get = new HttpGet(Endpoint.COMPANY_PROFILE.url() + "?token=" + token + "&symbol=" + symbol);
 
 		String result = null;
@@ -122,7 +123,7 @@ public class FinnhubClient {
 		return objectMapper.readValue(result, CompanyProfile.class);
 	}
 	
-	public List<EnrichedSymbol> getSymbols(String exchange) throws ClientProtocolException, IOException {
+	public List<EnrichedSymbol> getSymbols(String exchange) throws IOException, ParseException {
 		HttpGet get = new HttpGet(Endpoint.SYMBOL.url() + "?token=" + token + "&exchange=" + Exchange.valueOf(exchange).code());
 
 		String result = null;
@@ -133,7 +134,7 @@ public class FinnhubClient {
 		return objectMapper.readValue(result, new TypeReference<List<EnrichedSymbol>>(){});
 	}
 
-	public SymbolLookup searchSymbol(String query) throws ClientProtocolException, IOException {
+	public SymbolLookup searchSymbol(String query) throws IOException, ParseException {
 		HttpGet get = new HttpGet(Endpoint.SYMBOL_LOOKUP.url() + "?token=" + token + "&q=" + query);
 
 		String result = null;
