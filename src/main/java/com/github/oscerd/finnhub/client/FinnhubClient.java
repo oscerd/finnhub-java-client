@@ -99,6 +99,7 @@ public class FinnhubClient {
 	 * @param endEpoch As above.
 	 * @return JSON object with arrays for the close, low, high, open, volume. status is a String.
 	 * @throws IOException
+	 * @throws ParseException
 	 */
 	public Candle getCandle(String symbol, String resolution, long startEpoch, long endEpoch) throws IOException, ParseException {
 		HttpGet get = new HttpGet(Endpoint.CANDLE.url() + "?token=" + token
