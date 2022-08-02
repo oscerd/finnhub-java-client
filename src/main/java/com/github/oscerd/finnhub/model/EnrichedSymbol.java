@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "currency", "figi", "mic" })
+@JsonPropertyOrder({ "currency", "figi", "mic", "isin", "shareClassFIGI", "symbol2" })
 public class EnrichedSymbol extends Symbol {
 
 	@JsonProperty("currency")
@@ -30,6 +30,12 @@ public class EnrichedSymbol extends Symbol {
 	private String figi;
 	@JsonProperty("mic")
 	private String mic;
+	@JsonProperty("isin")
+	private String isin;
+	@JsonProperty("shareClassFIGI")
+	private String shareClassFIGI;
+	@JsonProperty("symbol2")
+	private String symbol2;
 
 	@JsonProperty("currency")
 	public String getCurrency() {
@@ -61,10 +67,40 @@ public class EnrichedSymbol extends Symbol {
 		this.mic = mic;
 	}
 
+	@JsonProperty("isin")
+	public String getIsin() {
+		return isin;
+	}
+
+	@JsonProperty("isin")
+	public void setIsin(String isin) {
+		this.isin = isin;
+	}
+
+	@JsonProperty("shareClassFIGI")
+	public String getShareClassFIGI() {
+		return shareClassFIGI;
+	}
+
+	@JsonProperty("shareClassFIGI")
+	public void setShareClassFIGI(String shareClassFIGI) {
+		this.shareClassFIGI = shareClassFIGI;
+	}
+
+	@JsonProperty("symbol2")
+	public String getSymbol2() {
+		return symbol2;
+	}
+
+	@JsonProperty("symbol2")
+	public void setSymbol2(String symbol2) {
+		this.symbol2 = symbol2;
+	}
+
 	@Override
 	public String toString() {
 		return "EnrichedSymbol [description=" + getDescription() + ", displaySymbol=" + getDisplaySymbol() + ", symbol=" + getSymbol() + ", type=" + getType() + 
-		", currency=" + currency + ", figi=" + figi + ", mic=" + mic + "]";
+		", currency=" + currency + ", figi=" + figi + ", mic=" + mic + ", isin=" + isin + ", shareClassFIGI=" + shareClassFIGI + ", symbol2=" + symbol2 + "]";
 	}
 
 	
