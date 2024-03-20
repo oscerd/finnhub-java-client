@@ -49,6 +49,8 @@ public class CompanyProfile {
 	private String finnhubIndustry;
 	@JsonProperty("phone")
 	private String phone;
+	@JsonProperty("estimateCurrency")
+	private String estimateCurrency;
 
 	@JsonProperty("country")
 	public String getCountry() {
@@ -168,6 +170,16 @@ public class CompanyProfile {
 	@JsonProperty("phone")
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	@JsonProperty("estimateCurrency")
+	public String getEstimateCurrency() {
+		return estimateCurrency;
+	}
+
+	@JsonProperty("estimateCurrency")
+	public void setEstimateCurrency(String estimateCurrency) {
+		this.estimateCurrency = estimateCurrency;
 	}
 
 	@Override
