@@ -72,6 +72,7 @@ public class FinnhubClientTest {
 
     @Test
     @EnabledIfEnvironmentVariable(named = "FINNHUB_TOKEN", matches = ".*")
+    @EnabledIfEnvironmentVariable(named = "FINNHUB_PREMIUM", matches = "true")
     void invokeCandlesOneDay() throws ParseException, IOException {
         FinnhubClient client = new FinnhubClient(System.getenv("FINNHUB_TOKEN"));
         Candle candle = client.getCandle(
@@ -89,6 +90,7 @@ public class FinnhubClientTest {
 
     @Test
     @EnabledIfEnvironmentVariable(named = "FINNHUB_TOKEN", matches = ".*")
+    @EnabledIfEnvironmentVariable(named = "FINNHUB_PREMIUM", matches = "true")
     void invokeCandlesTwoDays() throws ParseException, IOException {
         FinnhubClient client = new FinnhubClient(System.getenv("FINNHUB_TOKEN"));
         Candle candle = client.getCandle(
