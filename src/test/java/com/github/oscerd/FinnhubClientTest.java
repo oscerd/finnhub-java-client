@@ -69,7 +69,7 @@ public class FinnhubClientTest {
     @EnabledIfEnvironmentVariable(named = "FINNHUB_TOKEN", matches = ".*")
     void invocationMarketStatus() throws ParseException, IOException {
         FinnhubClient client = new FinnhubClient(System.getenv("FINNHUB_TOKEN"));
-        MarketStatus status = client.marketStatus("US");
+        MarketStatus status = client.marketStatus(Exchange.US_EXCHANGES.code());
         assertNotNull(status);
     }
 
