@@ -19,7 +19,7 @@ package com.github.oscerd.finnhub.client;
 import java.io.IOException;
 import java.util.List;
 
-import com.github.oscerd.finnhub.model.Candle;
+import com.github.oscerd.finnhub.model.*;
 import org.apache.hc.client5.http.ClientProtocolException;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
@@ -30,11 +30,6 @@ import org.apache.hc.core5.http.io.entity.EntityUtils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.oscerd.finnhub.model.CompanyProfile;
-import com.github.oscerd.finnhub.model.Exchange;
-import com.github.oscerd.finnhub.model.Quote;
-import com.github.oscerd.finnhub.model.EnrichedSymbol;
-import com.github.oscerd.finnhub.model.SymbolLookup;
 
 public class FinnhubClient {
 
@@ -144,6 +139,17 @@ public class FinnhubClient {
 		}
 
 		return objectMapper.readValue(result, SymbolLookup.class);
+	}
+
+	public MarketStatus marketStatus(String exchange) throws IOException, ParseException {
+		HttpGet get = new HttpGet(Endpoint.MARKET_STATUS.url() + "?token=" + token + "&exchange=" + exchange);
+
+		String result = null;
+		try (CloseableHttpResponse response = httpClient.execute(get)) {
+			result = EntityUtils.toString(response.getEntity());
+		}
+
+		return objectMapper.readValue(result, MarketStatus.class);
 	}
 
 	public static class Builder {
