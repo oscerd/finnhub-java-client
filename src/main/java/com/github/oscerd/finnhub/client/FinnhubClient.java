@@ -152,6 +152,17 @@ public class FinnhubClient {
 		return objectMapper.readValue(result, MarketStatus.class);
 	}
 
+	public MarketHoliday marketHoliday(String exchange) throws IOException, ParseException {
+		HttpGet get = new HttpGet(Endpoint.MARKET_HOLIDAY.url() + "?token=" + token + "&exchange=" + exchange);
+
+		String result = null;
+		try (CloseableHttpResponse response = httpClient.execute(get)) {
+			result = EntityUtils.toString(response.getEntity());
+		}
+
+		return objectMapper.readValue(result, MarketHoliday.class);
+	}
+
 	public static class Builder {
 
 		private final FinnhubClient client;

@@ -16,9 +16,6 @@
  */
 package com.github.oscerd;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,6 +26,8 @@ import com.github.oscerd.finnhub.model.*;
 import org.apache.hc.core5.http.ParseException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class FinnhubClientTest {
 
@@ -71,6 +70,15 @@ public class FinnhubClientTest {
         FinnhubClient client = new FinnhubClient(System.getenv("FINNHUB_TOKEN"));
         MarketStatus status = client.marketStatus(Exchange.US_EXCHANGES.code());
         assertNotNull(status);
+    }
+
+    @Test
+    @EnabledIfEnvironmentVariable(named = "FINNHUB_TOKEN", matches = ".*")
+    void invocationMarketHoliday() throws ParseException, IOException {
+        FinnhubClient client = new FinnhubClient(System.getenv("FINNHUB_TOKEN"));
+        MarketHoliday holidays = client.marketHoliday(Exchange.US_EXCHANGES.code());
+        assertNotNull(holidays);
+        assertTrue(holidays.getData().size() >= 1);
     }
 
     @Test
