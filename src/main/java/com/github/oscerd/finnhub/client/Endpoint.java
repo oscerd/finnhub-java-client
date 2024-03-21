@@ -22,7 +22,9 @@ public enum Endpoint {
     COMPANY_PROFILE("https://finnhub.io/api/v1/stock/profile2"),
     SYMBOL("https://finnhub.io/api/v1/stock/symbol"),
     SYMBOL_LOOKUP("https://finnhub.io/api/v1/search"),
+    MARKET_STATUS("https://finnhub.io/api/v1/stock/market-status"),
     CANDLE("https://finnhub.io/api/v1/stock/candle");
+
 
     private String url;
 

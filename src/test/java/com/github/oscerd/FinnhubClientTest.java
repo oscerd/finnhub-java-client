@@ -24,12 +24,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.github.oscerd.finnhub.client.FinnhubClient;
-import com.github.oscerd.finnhub.model.Candle;
-import com.github.oscerd.finnhub.model.CompanyProfile;
-import com.github.oscerd.finnhub.model.Exchange;
-import com.github.oscerd.finnhub.model.Quote;
-import com.github.oscerd.finnhub.model.EnrichedSymbol;
-import com.github.oscerd.finnhub.model.SymbolLookup;
+import com.github.oscerd.finnhub.model.*;
 
 import org.apache.hc.core5.http.ParseException;
 import org.junit.jupiter.api.Test;
@@ -68,6 +63,14 @@ public class FinnhubClientTest {
     	FinnhubClient client = new FinnhubClient(System.getenv("FINNHUB_TOKEN"));
         SymbolLookup lookup = client.searchSymbol("apple");
         assertEquals(22, lookup.getCount());
+    }
+
+    @Test
+    @EnabledIfEnvironmentVariable(named = "FINNHUB_TOKEN", matches = ".*")
+    void invocationMarketStatus() throws ParseException, IOException {
+        FinnhubClient client = new FinnhubClient(System.getenv("FINNHUB_TOKEN"));
+        MarketStatus status = client.marketStatus("US");
+        assertNotNull(status);
     }
 
     @Test
