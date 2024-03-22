@@ -19,8 +19,9 @@ package com.github.oscerd.finnhub.client;
 import java.io.IOException;
 import java.util.List;
 
-import com.github.oscerd.finnhub.model.*;
-import org.apache.hc.client5.http.ClientProtocolException;
+import com.github.oscerd.finnhub.models.*;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
@@ -28,26 +29,23 @@ import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 public class FinnhubClient {
 
 	private CloseableHttpClient httpClient = HttpClients.createDefault();
 	private String token;
-	private ObjectMapper objectMapper;
+	private Gson gson;
 
 	public FinnhubClient() {
 	}
 
 	public FinnhubClient(String token) {
 		this.token = token;
-		this.objectMapper = new ObjectMapper();
+		this.gson = new Gson();
 	}
 
-	public FinnhubClient(String token, ObjectMapper objectMapper) {
+	public FinnhubClient(String token, Gson gson) {
 		this.token = token;
-		this.objectMapper = objectMapper;
+		this.gson = gson;
 	}
 
 	public String getToken() {
@@ -58,12 +56,12 @@ public class FinnhubClient {
 		this.token = token;
 	}
 
-	public ObjectMapper getObjectMapper() {
-		return objectMapper;
+	public Gson getGson() {
+		return gson;
 	}
 
-	public void setObjectMapper(ObjectMapper objectMapper) {
-		this.objectMapper = objectMapper;
+	public void setGson(Gson gson) {
+		this.gson = gson;
 	}
 
 	public CloseableHttpClient getHttpClient() {
@@ -82,7 +80,7 @@ public class FinnhubClient {
 			result = EntityUtils.toString(response.getEntity());
 		}
 
-		return objectMapper.readValue(result, Quote.class);
+		return gson.fromJson(result, Quote.class);
 	}
 
 	/**
@@ -96,7 +94,7 @@ public class FinnhubClient {
 	 * @throws IOException
 	 * @throws ParseException
 	 */
-	public Candle getCandle(String symbol, String resolution, long startEpoch, long endEpoch) throws IOException, ParseException {
+	public StockCandles getCandle(String symbol, String resolution, long startEpoch, long endEpoch) throws IOException, ParseException {
 		HttpGet get = new HttpGet(Endpoint.CANDLE.url() + "?token=" + token
 				+ "&symbol=" + symbol.toUpperCase() + "&resolution=" + resolution + "&from=" + startEpoch + "&to=" + endEpoch);
 
@@ -105,10 +103,10 @@ public class FinnhubClient {
 			result = EntityUtils.toString(response.getEntity());
 		}
 
-		return objectMapper.readValue(result, Candle.class);
+		return gson.fromJson(result, StockCandles.class);
 	}
 
-	public CompanyProfile getCompanyProfile(String symbol) throws IOException, ParseException {
+	public CompanyProfile2 getCompanyProfile(String symbol) throws IOException, ParseException {
 		HttpGet get = new HttpGet(Endpoint.COMPANY_PROFILE.url() + "?token=" + token + "&symbol=" + symbol);
 
 		String result = null;
@@ -116,10 +114,10 @@ public class FinnhubClient {
 			result = EntityUtils.toString(response.getEntity());
 		}
 
-		return objectMapper.readValue(result, CompanyProfile.class);
+		return gson.fromJson(result, CompanyProfile2.class);
 	}
 	
-	public List<EnrichedSymbol> getSymbols(String exchange) throws IOException, ParseException {
+	public List<StockSymbol> getSymbols(String exchange) throws IOException, ParseException {
 		HttpGet get = new HttpGet(Endpoint.SYMBOL.url() + "?token=" + token + "&exchange=" + Exchange.valueOf(exchange).code());
 
 		String result = null;
@@ -127,7 +125,7 @@ public class FinnhubClient {
 			result = EntityUtils.toString(response.getEntity());
 		}
 
-		return objectMapper.readValue(result, new TypeReference<List<EnrichedSymbol>>(){});
+		return gson.fromJson(result, new TypeToken<List<StockSymbol>>(){});
 	}
 
 	public SymbolLookup searchSymbol(String query) throws IOException, ParseException {
@@ -138,7 +136,7 @@ public class FinnhubClient {
 			result = EntityUtils.toString(response.getEntity());
 		}
 
-		return objectMapper.readValue(result, SymbolLookup.class);
+		return gson.fromJson(result, SymbolLookup.class);
 	}
 
 	public MarketStatus marketStatus(String exchange) throws IOException, ParseException {
@@ -149,7 +147,7 @@ public class FinnhubClient {
 			result = EntityUtils.toString(response.getEntity());
 		}
 
-		return objectMapper.readValue(result, MarketStatus.class);
+		return gson.fromJson(result, MarketStatus.class);
 	}
 
 	public MarketHoliday marketHoliday(String exchange) throws IOException, ParseException {
@@ -160,7 +158,7 @@ public class FinnhubClient {
 			result = EntityUtils.toString(response.getEntity());
 		}
 
-		return objectMapper.readValue(result, MarketHoliday.class);
+		return gson.fromJson(result, MarketHoliday.class);
 	}
 
 	public static class Builder {
@@ -181,14 +179,14 @@ public class FinnhubClient {
 			return this;
 		}
 
-		public Builder mapper(ObjectMapper mapper) {
-			client.setObjectMapper(mapper);
+		public Builder gson(Gson mapper) {
+			client.setGson(mapper);
 			return this;
 		}
 
 		public FinnhubClient build() {
-			if (client.getObjectMapper() == null) {
-				client.setObjectMapper(new ObjectMapper());
+			if (client.getGson() == null) {
+				client.setGson(new Gson());
 			}
 			return client;
 		}
