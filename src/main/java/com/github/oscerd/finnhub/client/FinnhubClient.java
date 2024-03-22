@@ -80,10 +80,11 @@ public class FinnhubClient {
 	}
 
 	public Quote getQuote(String symbol) throws IOException, ParseException {
-		HttpGet get = new HttpGet(Endpoint.QUOTE.url() + "?token=" + token + "&symbol=" + symbol);
+		ClassicHttpRequest httpGet = ClassicRequestBuilder.get(Endpoint.QUOTE.url() + "?token=" + token + "&symbol=" + symbol)
+				.build();
 
 		String result = null;
-		try (CloseableHttpResponse response = httpClient.execute(get)) {
+		try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
 			result = EntityUtils.toString(response.getEntity());
 		}
 
@@ -102,11 +103,12 @@ public class FinnhubClient {
 	 * @throws ParseException
 	 */
 	public StockCandles getCandle(String symbol, String resolution, long startEpoch, long endEpoch) throws IOException, ParseException {
-		HttpGet get = new HttpGet(Endpoint.CANDLE.url() + "?token=" + token
-				+ "&symbol=" + symbol.toUpperCase() + "&resolution=" + resolution + "&from=" + startEpoch + "&to=" + endEpoch);
+		ClassicHttpRequest httpGet = ClassicRequestBuilder.get(Endpoint.CANDLE.url() + "?token=" + token
+						+ "&symbol=" + symbol.toUpperCase() + "&resolution=" + resolution + "&from=" + startEpoch + "&to=" + endEpoch)
+				.build();
 
 		String result = null;
-		try (CloseableHttpResponse response = httpClient.execute(get)) {
+		try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
 			result = EntityUtils.toString(response.getEntity());
 		}
 
@@ -114,10 +116,11 @@ public class FinnhubClient {
 	}
 
 	public CompanyProfile2 getCompanyProfile(String symbol) throws IOException, ParseException {
-		HttpGet get = new HttpGet(Endpoint.COMPANY_PROFILE.url() + "?token=" + token + "&symbol=" + symbol);
+		ClassicHttpRequest httpGet = ClassicRequestBuilder.get(Endpoint.COMPANY_PROFILE.url() + "?token=" + token + "&symbol=" + symbol)
+				.build();
 
 		String result = null;
-		try (CloseableHttpResponse response = httpClient.execute(get)) {
+		try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
 			result = EntityUtils.toString(response.getEntity());
 		}
 
@@ -125,10 +128,11 @@ public class FinnhubClient {
 	}
 	
 	public List<StockSymbol> getSymbols(String exchange) throws IOException, ParseException {
-		HttpGet get = new HttpGet(Endpoint.SYMBOL.url() + "?token=" + token + "&exchange=" + Exchange.valueOf(exchange).code());
+		ClassicHttpRequest httpGet = ClassicRequestBuilder.get(Endpoint.SYMBOL.url() + "?token=" + token + "&exchange=" + Exchange.valueOf(exchange).code())
+				.build();
 
 		String result = null;
-		try (CloseableHttpResponse response = httpClient.execute(get)) {
+		try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
 			result = EntityUtils.toString(response.getEntity());
 		}
 
@@ -136,10 +140,11 @@ public class FinnhubClient {
 	}
 
 	public SymbolLookup searchSymbol(String query) throws IOException, ParseException {
-		HttpGet get = new HttpGet(Endpoint.SYMBOL_LOOKUP.url() + "?token=" + token + "&q=" + query);
+		ClassicHttpRequest httpGet = ClassicRequestBuilder.get(Endpoint.SYMBOL_LOOKUP.url() + "?token=" + token + "&q=" + query)
+				.build();
 
 		String result = null;
-		try (CloseableHttpResponse response = httpClient.execute(get)) {
+		try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
 			result = EntityUtils.toString(response.getEntity());
 		}
 
@@ -147,10 +152,11 @@ public class FinnhubClient {
 	}
 
 	public MarketStatus marketStatus(String exchange) throws IOException, ParseException {
-		HttpGet get = new HttpGet(Endpoint.MARKET_STATUS.url() + "?token=" + token + "&exchange=" + exchange);
+		ClassicHttpRequest httpGet = ClassicRequestBuilder.get(Endpoint.MARKET_STATUS.url() + "?token=" + token + "&exchange=" + exchange)
+				.build();
 
 		String result = null;
-		try (CloseableHttpResponse response = httpClient.execute(get)) {
+		try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
 			result = EntityUtils.toString(response.getEntity());
 		}
 
@@ -158,10 +164,11 @@ public class FinnhubClient {
 	}
 
 	public MarketHoliday marketHoliday(String exchange) throws IOException, ParseException {
-		HttpGet get = new HttpGet(Endpoint.MARKET_HOLIDAY.url() + "?token=" + token + "&exchange=" + exchange);
+		ClassicHttpRequest httpGet = ClassicRequestBuilder.get(Endpoint.MARKET_HOLIDAY.url() + "?token=" + token + "&exchange=" + exchange)
+				.build();
 
 		String result = null;
-		try (CloseableHttpResponse response = httpClient.execute(get)) {
+		try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
 			result = EntityUtils.toString(response.getEntity());
 		}
 
@@ -169,10 +176,11 @@ public class FinnhubClient {
 	}
 
 	public List<Dividends> dividends(String symbol, String from, String to) throws IOException, ParseException {
-		HttpGet get = new HttpGet(Endpoint.DIVIDEND.url() + "?token=" + token + "&symbol=" + symbol  + "&from=" + from + "&to=" + to);
+		ClassicHttpRequest httpGet = ClassicRequestBuilder.get(Endpoint.DIVIDEND.url() + "?token=" + token + "&symbol=" + symbol  + "&from=" + from + "&to=" + to)
+				.build();
 
 		String result = null;
-		try (CloseableHttpResponse response = httpClient.execute(get)) {
+		try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
 			result = EntityUtils.toString(response.getEntity());
 			System.err.println(result.toString());
 		}
