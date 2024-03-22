@@ -31,8 +31,10 @@ import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.core5.http.ClassicHttpRequest;
 import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
+import org.apache.hc.core5.http.io.support.ClassicRequestBuilder;
 
 public class FinnhubClient {
 
@@ -172,9 +174,22 @@ public class FinnhubClient {
 		String result = null;
 		try (CloseableHttpResponse response = httpClient.execute(get)) {
 			result = EntityUtils.toString(response.getEntity());
+			System.err.println(result.toString());
 		}
 
-		return gson.fromJson(result, new TypeToken<List<Dividends>>(){});
+		return gson.fromJson(result, new TypeToken<List<Dividends>>(){}.getType());
+	}
+
+	public List<CompanyNews> companyNews(String symbol, String from, String to) throws IOException, ParseException {
+		ClassicHttpRequest httpGet = ClassicRequestBuilder.get(Endpoint.COMPANY_NEWS.url() + "?token=" + token + "&symbol=" + symbol  + "&from=" + from + "&to=" + to)
+				.build();
+
+		String result = null;
+		try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
+			result = EntityUtils.toString(response.getEntity());
+		}
+
+		return gson.fromJson(result, new TypeToken<List<CompanyNews>>(){}.getType());
 	}
 
 	public static class Builder {

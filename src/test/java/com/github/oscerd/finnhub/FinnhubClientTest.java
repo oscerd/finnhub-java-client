@@ -119,5 +119,14 @@ public class FinnhubClientTest {
         FinnhubClient client = new FinnhubClient(System.getenv("FINNHUB_TOKEN"));
         List<Dividends> dividends = client.dividends("TSLA", "2020-01-01", "2023-01-01");
         assertNotNull(dividends);
+        assertEquals(dividends.size(), 0);
+    }
+
+    @Test
+    @EnabledIfEnvironmentVariable(named = "FINNHUB_TOKEN", matches = ".*")
+    void invocationCompanyNews() throws ParseException, IOException {
+        FinnhubClient client = new FinnhubClient(System.getenv("FINNHUB_TOKEN"));
+        List<CompanyNews> companyNews = client.companyNews("TSLA", "2024-01-01", "2024-03-20");
+        assertNotNull(companyNews);
     }
 }
