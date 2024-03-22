@@ -17,11 +17,16 @@
 package com.github.oscerd.finnhub.client;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 import com.github.oscerd.finnhub.models.*;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
@@ -40,7 +45,7 @@ public class FinnhubClient {
 
 	public FinnhubClient(String token) {
 		this.token = token;
-		this.gson = new Gson();
+		this.gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter().nullSafe()).create();
 	}
 
 	public FinnhubClient(String token, Gson gson) {
@@ -161,6 +166,17 @@ public class FinnhubClient {
 		return gson.fromJson(result, MarketHoliday.class);
 	}
 
+	public List<Dividends> dividends(String symbol, String from, String to) throws IOException, ParseException {
+		HttpGet get = new HttpGet(Endpoint.DIVIDEND.url() + "?token=" + token + "&symbol=" + symbol  + "&from=" + from + "&to=" + to);
+
+		String result = null;
+		try (CloseableHttpResponse response = httpClient.execute(get)) {
+			result = EntityUtils.toString(response.getEntity());
+		}
+
+		return gson.fromJson(result, new TypeToken<List<Dividends>>(){});
+	}
+
 	public static class Builder {
 
 		private final FinnhubClient client;
@@ -186,9 +202,21 @@ public class FinnhubClient {
 
 		public FinnhubClient build() {
 			if (client.getGson() == null) {
-				client.setGson(new Gson());
+				client.setGson(new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter().nullSafe()).create());
 			}
 			return client;
+		}
+	}
+
+	private static final class LocalDateAdapter extends TypeAdapter<LocalDate> {
+		@Override
+		public void write(final JsonWriter jsonWriter, final LocalDate localDate ) throws IOException {
+			jsonWriter.value(localDate.toString());
+		}
+
+		@Override
+		public LocalDate read( final JsonReader jsonReader ) throws IOException {
+			return LocalDate.parse(jsonReader.nextString());
 		}
 	}
 }
