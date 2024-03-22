@@ -40,7 +40,7 @@ public class FinnhubClientBuilderTest {
     @EnabledIfEnvironmentVariable(named = "FINNHUB_TOKEN", matches = ".*")
     void invocation() throws ParseException, IOException {
         FinnhubClient client = new FinnhubClient.Builder().token(System.getenv("FINNHUB_TOKEN")).build();
-        Quote quote = client.getQuote("IBM");
+        Quote quote = client.getQuote("TSLA");
         assertNotNull(quote);
     }
     
@@ -48,7 +48,7 @@ public class FinnhubClientBuilderTest {
     @EnabledIfEnvironmentVariable(named = "FINNHUB_TOKEN", matches = ".*")
     void invocationCompanyProfile() throws ParseException, IOException {
         FinnhubClient client = new FinnhubClient.Builder().token(System.getenv("FINNHUB_TOKEN")).build();
-        CompanyProfile companyProfile = client.getCompanyProfile("IBM");
+        CompanyProfile companyProfile = client.getCompanyProfile("TSLA");
         assertNotNull(companyProfile);
     }
     

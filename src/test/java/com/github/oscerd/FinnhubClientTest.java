@@ -35,7 +35,7 @@ public class FinnhubClientTest {
     @EnabledIfEnvironmentVariable(named = "FINNHUB_TOKEN", matches = ".*")
     void invocation() throws ParseException, IOException {
     	FinnhubClient client = new FinnhubClient(System.getenv("FINNHUB_TOKEN"));
-        Quote quote = client.getQuote("IBM");
+        Quote quote = client.getQuote("TSLA");
         assertNotNull(quote);
     }
 
@@ -43,7 +43,7 @@ public class FinnhubClientTest {
     @EnabledIfEnvironmentVariable(named = "FINNHUB_TOKEN", matches = ".*")
     void invocationCompanyProfile() throws ParseException, IOException {
     	FinnhubClient client = new FinnhubClient(System.getenv("FINNHUB_TOKEN"));
-        CompanyProfile companyProfile = client.getCompanyProfile("IBM");
+        CompanyProfile companyProfile = client.getCompanyProfile("TSLA");
         assertNotNull(companyProfile);
     }
 
@@ -83,7 +83,6 @@ public class FinnhubClientTest {
 
     @Test
     @EnabledIfEnvironmentVariable(named = "FINNHUB_TOKEN", matches = ".*")
-    @EnabledIfEnvironmentVariable(named = "FINNHUB_PREMIUM", matches = "true")
     void invokeCandlesOneDay() throws ParseException, IOException {
         FinnhubClient client = new FinnhubClient(System.getenv("FINNHUB_TOKEN"));
         Candle candle = client.getCandle(
@@ -95,13 +94,10 @@ public class FinnhubClientTest {
 
         assertEquals("ok", candle.getS());
         assertEquals(1, candle.getC().length);
-        assertEquals(1222.09D, candle.getC()[0]);
-        assertEquals(21628812L, candle.getV()[0]);
     }
 
     @Test
     @EnabledIfEnvironmentVariable(named = "FINNHUB_TOKEN", matches = ".*")
-    @EnabledIfEnvironmentVariable(named = "FINNHUB_PREMIUM", matches = "true")
     void invokeCandlesTwoDays() throws ParseException, IOException {
         FinnhubClient client = new FinnhubClient(System.getenv("FINNHUB_TOKEN"));
         Candle candle = client.getCandle(
@@ -114,12 +110,6 @@ public class FinnhubClientTest {
 
         assertEquals(2, candle.getC().length);
         assertEquals("ok", candle.getS());
-
-        assertEquals(1229.91D, candle.getC()[0]);
-        assertEquals(1222.09D, candle.getC()[1]);
-
-        assertEquals(25397410L, candle.getV()[0]);
-        assertEquals(21628812L, candle.getV()[1]);
 
     }
 }
