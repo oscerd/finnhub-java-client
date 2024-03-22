@@ -112,4 +112,12 @@ public class FinnhubClientTest {
         assertEquals("ok", candle.getS());
 
     }
+
+    @Test
+    @EnabledIfEnvironmentVariable(named = "FINNHUB_TOKEN", matches = ".*")
+    void invocationDividends() throws ParseException, IOException {
+        FinnhubClient client = new FinnhubClient(System.getenv("FINNHUB_TOKEN"));
+        List<Dividends> dividends = client.dividends("TSLA", "2020-01-01", "2023-01-01");
+        assertNotNull(dividends);
+    }
 }
