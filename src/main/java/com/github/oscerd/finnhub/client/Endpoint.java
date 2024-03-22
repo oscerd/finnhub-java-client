@@ -17,15 +17,16 @@
 package com.github.oscerd.finnhub.client;
 
 public enum Endpoint {
-	
-    QUOTE("https://finnhub.io/api/v1/quote"),
+
+    CANDLE("https://finnhub.io/api/v1/stock/candle"),
+    COMPANY_NEWS("https://finnhub.io/api/v1/company-news"),
     COMPANY_PROFILE("https://finnhub.io/api/v1/stock/profile2"),
+    DIVIDEND("https://finnhub.io/api/v1/stock/dividend"),
+    MARKET_HOLIDAY("https://finnhub.io/api/v1/stock/market-holiday"),
+    MARKET_STATUS("https://finnhub.io/api/v1/stock/market-status"),
     SYMBOL("https://finnhub.io/api/v1/stock/symbol"),
     SYMBOL_LOOKUP("https://finnhub.io/api/v1/search"),
-    MARKET_STATUS("https://finnhub.io/api/v1/stock/market-status"),
-    MARKET_HOLIDAY("https://finnhub.io/api/v1/stock/market-holiday"),
-    DIVIDEND("https://finnhub.io/api/v1/stock/dividend"),
-    CANDLE("https://finnhub.io/api/v1/stock/candle");
+    QUOTE("https://finnhub.io/api/v1/quote");
 
 
     private String url;
