@@ -23,7 +23,6 @@ public enum Endpoint {
     SYMBOL("https://finnhub.io/api/v1/stock/symbol"),
     SYMBOL_LOOKUP("https://finnhub.io/api/v1/search"),
     MARKET_STATUS("https://finnhub.io/api/v1/stock/market-status"),
-
     MARKET_HOLIDAY("https://finnhub.io/api/v1/stock/market-holiday"),
     CANDLE("https://finnhub.io/api/v1/stock/candle");
 
