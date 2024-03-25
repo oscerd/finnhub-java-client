@@ -182,7 +182,6 @@ public class FinnhubClient {
 		String result = null;
 		try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
 			result = EntityUtils.toString(response.getEntity());
-			System.err.println(result.toString());
 		}
 
 		return gson.fromJson(result, new TypeToken<List<Dividends>>(){}.getType());
@@ -198,6 +197,21 @@ public class FinnhubClient {
 		}
 
 		return gson.fromJson(result, new TypeToken<List<CompanyNews>>(){}.getType());
+	}
+
+	public BasicFinancials basicFinancials(String symbol, String metric) throws IOException, ParseException {
+		if (metric == null) {
+			metric = "all";
+		}
+		ClassicHttpRequest httpGet = ClassicRequestBuilder.get(Endpoint.METRIC.url() + "?token=" + token + "&symbol=" + symbol  + "&metric=" + metric)
+				.build();
+
+		String result = null;
+		try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
+			result = EntityUtils.toString(response.getEntity());
+		}
+
+		return gson.fromJson(result, BasicFinancials.class);
 	}
 
 	public static class Builder {

@@ -18,6 +18,7 @@ package com.github.oscerd.finnhub.client;
 
 public enum Endpoint {
 
+    METRIC("https://finnhub.io/api/v1/stock/metric"),
     CANDLE("https://finnhub.io/api/v1/stock/candle"),
     COMPANY_NEWS("https://finnhub.io/api/v1/company-news"),
     COMPANY_PROFILE("https://finnhub.io/api/v1/stock/profile2"),
