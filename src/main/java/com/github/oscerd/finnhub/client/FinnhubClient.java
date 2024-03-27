@@ -79,7 +79,7 @@ public class FinnhubClient {
 		this.httpClient = httpClient;
 	}
 
-	public Quote getQuote(String symbol) throws IOException, ParseException {
+	public Quote quote(String symbol) throws IOException, ParseException {
 		ClassicHttpRequest httpGet = ClassicRequestBuilder.get(Endpoint.QUOTE.url() + "?token=" + token + "&symbol=" + symbol)
 				.build();
 
@@ -102,7 +102,7 @@ public class FinnhubClient {
 	 * @throws IOException
 	 * @throws ParseException
 	 */
-	public StockCandles getCandle(String symbol, String resolution, long startEpoch, long endEpoch) throws IOException, ParseException {
+	public StockCandles candle(String symbol, String resolution, long startEpoch, long endEpoch) throws IOException, ParseException {
 		ClassicHttpRequest httpGet = ClassicRequestBuilder.get(Endpoint.CANDLE.url() + "?token=" + token
 						+ "&symbol=" + symbol.toUpperCase() + "&resolution=" + resolution + "&from=" + startEpoch + "&to=" + endEpoch)
 				.build();
@@ -115,7 +115,7 @@ public class FinnhubClient {
 		return gson.fromJson(result, StockCandles.class);
 	}
 
-	public CompanyProfile2 getCompanyProfile(String symbol) throws IOException, ParseException {
+	public CompanyProfile2 companyProfile(String symbol) throws IOException, ParseException {
 		ClassicHttpRequest httpGet = ClassicRequestBuilder.get(Endpoint.COMPANY_PROFILE.url() + "?token=" + token + "&symbol=" + symbol)
 				.build();
 
@@ -127,7 +127,7 @@ public class FinnhubClient {
 		return gson.fromJson(result, CompanyProfile2.class);
 	}
 	
-	public List<StockSymbol> getSymbols(String exchange) throws IOException, ParseException {
+	public List<StockSymbol> symbols(String exchange) throws IOException, ParseException {
 		ClassicHttpRequest httpGet = ClassicRequestBuilder.get(Endpoint.SYMBOL.url() + "?token=" + token + "&exchange=" + Exchange.valueOf(exchange).code())
 				.build();
 

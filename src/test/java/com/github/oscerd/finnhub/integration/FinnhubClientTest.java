@@ -35,7 +35,7 @@ public class FinnhubClientTest {
     @EnabledIfEnvironmentVariable(named = "FINNHUB_TOKEN", matches = ".*")
     void invocation() throws ParseException, IOException {
     	FinnhubClient client = new FinnhubClient(System.getenv("FINNHUB_TOKEN"));
-        Quote quote = client.getQuote("TSLA");
+        Quote quote = client.quote("TSLA");
         assertNotNull(quote);
     }
 
@@ -43,7 +43,7 @@ public class FinnhubClientTest {
     @EnabledIfEnvironmentVariable(named = "FINNHUB_TOKEN", matches = ".*")
     void invocationCompanyProfile() throws ParseException, IOException {
     	FinnhubClient client = new FinnhubClient(System.getenv("FINNHUB_TOKEN"));
-        CompanyProfile2 companyProfile = client.getCompanyProfile("TSLA");
+        CompanyProfile2 companyProfile = client.companyProfile("TSLA");
         assertNotNull(companyProfile);
     }
 
@@ -51,7 +51,7 @@ public class FinnhubClientTest {
     @EnabledIfEnvironmentVariable(named = "FINNHUB_TOKEN", matches = ".*")
     void invocationSymbols() throws ParseException, IOException {
     	FinnhubClient client = new FinnhubClient(System.getenv("FINNHUB_TOKEN"));
-        List<StockSymbol> symbols = client.getSymbols(Exchange.US_EXCHANGES.toString());
+        List<StockSymbol> symbols = client.symbols(Exchange.US_EXCHANGES.toString());
         List<StockSymbol> t = symbols.stream().filter(s -> s.getDescription().contains("AMAZON.COM")).collect(Collectors.toList());
         assertEquals(1, t.size());
     }
@@ -85,7 +85,7 @@ public class FinnhubClientTest {
     @EnabledIfEnvironmentVariable(named = "FINNHUB_TOKEN", matches = ".*")
     void invokeCandlesOneDay() throws ParseException, IOException {
         FinnhubClient client = new FinnhubClient(System.getenv("FINNHUB_TOKEN"));
-        StockCandles candle = client.getCandle(
+        StockCandles candle = client.candle(
             "TSLA",
             "D",
             // Nov/5/2021 18:00:00 GMT = 1636135200
@@ -100,7 +100,7 @@ public class FinnhubClientTest {
     @EnabledIfEnvironmentVariable(named = "FINNHUB_TOKEN", matches = ".*")
     void invokeCandlesTwoDays() throws ParseException, IOException {
         FinnhubClient client = new FinnhubClient(System.getenv("FINNHUB_TOKEN"));
-        StockCandles candle = client.getCandle(
+        StockCandles candle = client.candle(
             "TSLA",
             "D",
             // Nov/4/2021 18:00:00 GMT = 1636048800
