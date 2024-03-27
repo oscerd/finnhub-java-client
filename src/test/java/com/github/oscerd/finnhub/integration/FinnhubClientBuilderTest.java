@@ -35,7 +35,7 @@ public class FinnhubClientBuilderTest {
     @EnabledIfEnvironmentVariable(named = "FINNHUB_TOKEN", matches = ".*")
     void invocation() throws ParseException, IOException {
         FinnhubClient client = new FinnhubClient.Builder().token(System.getenv("FINNHUB_TOKEN")).build();
-        Quote quote = client.getQuote("TSLA");
+        Quote quote = client.quote("TSLA");
         assertNotNull(quote);
     }
     
@@ -43,7 +43,7 @@ public class FinnhubClientBuilderTest {
     @EnabledIfEnvironmentVariable(named = "FINNHUB_TOKEN", matches = ".*")
     void invocationCompanyProfile() throws ParseException, IOException {
         FinnhubClient client = new FinnhubClient.Builder().token(System.getenv("FINNHUB_TOKEN")).build();
-        CompanyProfile2 companyProfile = client.getCompanyProfile("TSLA");
+        CompanyProfile2 companyProfile = client.companyProfile("TSLA");
         assertNotNull(companyProfile);
     }
     
@@ -51,7 +51,7 @@ public class FinnhubClientBuilderTest {
     @EnabledIfEnvironmentVariable(named = "FINNHUB_TOKEN", matches = ".*")
     void invocationSymbols() throws ParseException, IOException {
         FinnhubClient client = new FinnhubClient.Builder().token(System.getenv("FINNHUB_TOKEN")).build();
-        List<StockSymbol> symbols = client.getSymbols(Exchange.US_EXCHANGES.toString());
+        List<StockSymbol> symbols = client.symbols(Exchange.US_EXCHANGES.toString());
         List<StockSymbol> t = symbols.stream().filter(s -> s.getDescription().contains("AMAZON.COM")).collect(Collectors.toList());
         assertEquals(1, t.size());
     }
