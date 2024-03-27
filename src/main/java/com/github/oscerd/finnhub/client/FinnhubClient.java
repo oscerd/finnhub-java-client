@@ -79,6 +79,13 @@ public class FinnhubClient {
 		this.httpClient = httpClient;
 	}
 
+	/**
+	 * Get the current quote for a specific symbol
+	 * @param symbol Ticker symbol
+	 * @return JSON object with arrays for the current price, change, percent change, high, low, open and previous close price
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	public Quote quote(String symbol) throws IOException, ParseException {
 		ClassicHttpRequest httpGet = ClassicRequestBuilder.get(Endpoint.QUOTE.url() + "?token=" + token + "&symbol=" + symbol)
 				.build();
@@ -115,6 +122,13 @@ public class FinnhubClient {
 		return gson.fromJson(result, StockCandles.class);
 	}
 
+	/**
+	 * Get the company profile for a specific symbol
+	 * @param symbol Ticker symbol
+	 * @return JSON object with information about the company
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	public CompanyProfile2 companyProfile(String symbol) throws IOException, ParseException {
 		ClassicHttpRequest httpGet = ClassicRequestBuilder.get(Endpoint.COMPANY_PROFILE.url() + "?token=" + token + "&symbol=" + symbol)
 				.build();
@@ -126,7 +140,14 @@ public class FinnhubClient {
 
 		return gson.fromJson(result, CompanyProfile2.class);
 	}
-	
+
+	/**
+	 * List the supported stocks for a specific market exchange
+	 * @param exchange Market exchange
+	 * @return JSON array with list of supported stocks enriched with more details
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	public List<StockSymbol> symbols(String exchange) throws IOException, ParseException {
 		ClassicHttpRequest httpGet = ClassicRequestBuilder.get(Endpoint.SYMBOL.url() + "?token=" + token + "&exchange=" + Exchange.valueOf(exchange).code())
 				.build();
@@ -139,6 +160,13 @@ public class FinnhubClient {
 		return gson.fromJson(result, new TypeToken<List<StockSymbol>>(){});
 	}
 
+	/**
+	 * Query for a specific stock symbol
+	 * @param query Query text can be symbol, name, isin, or cusip.
+	 * @return JSON array with list of supported stocks enriched with more details
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	public SymbolLookup searchSymbol(String query) throws IOException, ParseException {
 		ClassicHttpRequest httpGet = ClassicRequestBuilder.get(Endpoint.SYMBOL_LOOKUP.url() + "?token=" + token + "&q=" + query)
 				.build();
@@ -151,6 +179,13 @@ public class FinnhubClient {
 		return gson.fromJson(result, SymbolLookup.class);
 	}
 
+	/**
+	 * Return market status for a specific stock exchange
+	 * @param exchange Exchange code
+	 * @return JSON object with market status
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	public MarketStatus marketStatus(String exchange) throws IOException, ParseException {
 		ClassicHttpRequest httpGet = ClassicRequestBuilder.get(Endpoint.MARKET_STATUS.url() + "?token=" + token + "&exchange=" + exchange)
 				.build();
@@ -163,6 +198,13 @@ public class FinnhubClient {
 		return gson.fromJson(result, MarketStatus.class);
 	}
 
+	/**
+	 * Return market holidays for a specific stock exchange
+	 * @param exchange Exchange code
+	 * @return JSON arrays with the holidays for the specific stock exchange
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	public MarketHoliday marketHoliday(String exchange) throws IOException, ParseException {
 		ClassicHttpRequest httpGet = ClassicRequestBuilder.get(Endpoint.MARKET_HOLIDAY.url() + "?token=" + token + "&exchange=" + exchange)
 				.build();
@@ -175,6 +217,15 @@ public class FinnhubClient {
 		return gson.fromJson(result, MarketHoliday.class);
 	}
 
+	/**
+	 * Return dividends history for a specific date range of a specific stock symbol
+	 * @param symbol Exchange code
+	 * @param from from date with format YYYY-MM-DD
+	 * @param to from date with format YYYY-MM-DD
+	 * @return JSON arrays with the dividends for specific date range
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	public List<Dividends> dividends(String symbol, String from, String to) throws IOException, ParseException {
 		ClassicHttpRequest httpGet = ClassicRequestBuilder.get(Endpoint.DIVIDEND.url() + "?token=" + token + "&symbol=" + symbol  + "&from=" + from + "&to=" + to)
 				.build();
@@ -187,6 +238,15 @@ public class FinnhubClient {
 		return gson.fromJson(result, new TypeToken<List<Dividends>>(){}.getType());
 	}
 
+	/**
+	 * Return company news for a specific date range of a specific stock symbol
+	 * @param symbol Exchange code
+	 * @param from from date with format YYYY-MM-DD
+	 * @param to from date with format YYYY-MM-DD
+	 * @return JSON arrays with the company news for specific date range
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	public List<CompanyNews> companyNews(String symbol, String from, String to) throws IOException, ParseException {
 		ClassicHttpRequest httpGet = ClassicRequestBuilder.get(Endpoint.COMPANY_NEWS.url() + "?token=" + token + "&symbol=" + symbol  + "&from=" + from + "&to=" + to)
 				.build();
@@ -199,6 +259,14 @@ public class FinnhubClient {
 		return gson.fromJson(result, new TypeToken<List<CompanyNews>>(){}.getType());
 	}
 
+	/**
+	 * Return company news for a specific date range of a specific stock symbol
+	 * @param symbol Exchange code
+	 * @param metric the metric to return, supported value is only 'all'
+	 * @return JSON arrays with the company basic financials such as margin, P/E ratio, 52-week high/low etc.
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	public BasicFinancials basicFinancials(String symbol, String metric) throws IOException, ParseException {
 		if (metric == null) {
 			metric = "all";
