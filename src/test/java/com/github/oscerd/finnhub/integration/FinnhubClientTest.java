@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.oscerd.finnhub;
+package com.github.oscerd.finnhub.integration;
 
 import java.io.IOException;
 import java.util.List;
