@@ -29,7 +29,7 @@
         <junit.jupiter.version>5.10.2</junit.jupiter.version>
         <threetenbp.version>1.6.9</threetenbp.version>
         <gson.version>2.10.1</gson.version>
-        <jakarta.annotation.version>2.1.1</jakarta.annotation.version>
+        <jakarta.annotation.version>3.0.0</jakarta.annotation.version>
         <log4j.version>2.23.1</log4j.version>
         <swagger.annotations.version>2.2.21</swagger.annotations.version>
         <mockito.version>5.11.0</mockito.version>
