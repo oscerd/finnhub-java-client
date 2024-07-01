@@ -101,7 +101,6 @@ public class FinnhubClientTest {
             1636135200,
             1636135200);
 
-        System.err.println(candle.toString());
         assertEquals("ok", candle.getS());
         assertEquals(1, candle.getC().size());
     }
