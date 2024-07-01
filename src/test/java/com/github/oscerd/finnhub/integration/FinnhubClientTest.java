@@ -83,6 +83,15 @@ public class FinnhubClientTest {
 
     @Test
     @EnabledIfEnvironmentVariable(named = "FINNHUB_TOKEN", matches = ".*")
+    void invocationMarketNews() throws ParseException, IOException {
+        FinnhubClient client = new FinnhubClient(System.getenv("FINNHUB_TOKEN"));
+        List<MarketNews> marketNews = client.marketNews("general");
+        assertNotNull(marketNews);
+        assertTrue(marketNews.size() >= 1);
+    }
+
+    @Test
+    @EnabledIfEnvironmentVariable(named = "FINNHUB_TOKEN", matches = ".*")
     void invokeCandlesOneDay() throws ParseException, IOException {
         FinnhubClient client = new FinnhubClient(System.getenv("FINNHUB_TOKEN"));
         StockCandles candle = client.candle(
@@ -92,6 +101,7 @@ public class FinnhubClientTest {
             1636135200,
             1636135200);
 
+        System.err.println(candle.toString());
         assertEquals("ok", candle.getS());
         assertEquals(1, candle.getC().size());
     }
