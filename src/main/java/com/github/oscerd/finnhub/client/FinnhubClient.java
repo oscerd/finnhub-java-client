@@ -218,6 +218,25 @@ public class FinnhubClient {
 	}
 
 	/**
+	 * Return market holidays for a specific stock exchange
+	 * @param category category for the news one of general, forex, crypto and merger
+	 * @return JSON arrays with the news for the specified category
+	 * @throws IOException
+	 * @throws ParseException
+	 */
+	public List<MarketNews> marketNews(String category) throws IOException, ParseException {
+		ClassicHttpRequest httpGet = ClassicRequestBuilder.get(Endpoint.MARKET_NEWS.url() + "?token=" + token + "&category=" + category)
+				.build();
+
+		String result = null;
+		try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
+			result = EntityUtils.toString(response.getEntity());
+		}
+
+		return gson.fromJson(result, new TypeToken<List<MarketNews>>(){}.getType());
+	}
+
+	/**
 	 * Return dividends history for a specific date range of a specific stock symbol
 	 * @param symbol Exchange code
 	 * @param from from date with format YYYY-MM-DD
