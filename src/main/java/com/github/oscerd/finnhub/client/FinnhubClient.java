@@ -326,8 +326,6 @@ public class FinnhubClient {
 			result = EntityUtils.toString(response.getEntity());
 		}
 
-		System.err.println(result.toString());
-
 		return gson.fromJson(result, InsiderTransactions.class);
 	}
 
