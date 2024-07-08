@@ -301,6 +301,36 @@ public class FinnhubClient {
 		return gson.fromJson(result, BasicFinancials.class);
 	}
 
+	/**
+	 * Get the list of Insider Transactions objects for a date or a range. Set startEpoch equal to the endEpoch for one day.
+	 * @param symbol Ticker symbol
+	 * Some timeframes might not be available depending on the exchange.
+	 * @param from From date with format YYYY-MM-DD
+	 * @param from To date with format YYYY-MM-DD
+	 * @return JSON object with Insider Transaction Objects
+	 * @throws IOException
+	 * @throws ParseException
+	 */
+	public InsiderTransactions insiderTransactions(String symbol, String from, String to) throws IOException, ParseException {
+
+		StringBuilder urlBuilder = new StringBuilder(Endpoint.INSIDER_TRANSACTIONS.url() + "?token=" + token
+				+ "&symbol=" + symbol.toUpperCase());
+		if (from != null && to != null) {
+			urlBuilder.append("&from=" + from + "&to=" + to);
+		}
+
+		ClassicHttpRequest httpGet = ClassicRequestBuilder.get(urlBuilder.toString()).build();
+
+		String result = null;
+		try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
+			result = EntityUtils.toString(response.getEntity());
+		}
+
+		System.err.println(result.toString());
+
+		return gson.fromJson(result, InsiderTransactions.class);
+	}
+
 	public static class Builder {
 
 		private final FinnhubClient client;

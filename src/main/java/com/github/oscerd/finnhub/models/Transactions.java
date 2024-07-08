@@ -37,10 +37,10 @@ public class Transactions {
   private Long change = null;
 
   @SerializedName("filingDate")
-  private LocalDate filingDate = null;
+  private String filingDate = null;
 
   @SerializedName("transactionDate")
-  private LocalDate transactionDate = null;
+  private String transactionDate = null;
 
   @SerializedName("transactionPrice")
   private Float transactionPrice = null;
@@ -120,7 +120,7 @@ public class Transactions {
     this.change = change;
   }
 
-  public Transactions filingDate(LocalDate filingDate) {
+  public Transactions filingDate(String filingDate) {
     this.filingDate = filingDate;
     return this;
   }
@@ -130,15 +130,15 @@ public class Transactions {
    * @return filingDate
   **/
   @Schema(description = "Filing date.")
-  public LocalDate getFilingDate() {
+  public String getFilingDate() {
     return filingDate;
   }
 
-  public void setFilingDate(LocalDate filingDate) {
+  public void setFilingDate(String filingDate) {
     this.filingDate = filingDate;
   }
 
-  public Transactions transactionDate(LocalDate transactionDate) {
+  public Transactions transactionDate(String transactionDate) {
     this.transactionDate = transactionDate;
     return this;
   }
@@ -148,11 +148,11 @@ public class Transactions {
    * @return transactionDate
   **/
   @Schema(description = "Transaction date.")
-  public LocalDate getTransactionDate() {
+  public String getTransactionDate() {
     return transactionDate;
   }
 
-  public void setTransactionDate(LocalDate transactionDate) {
+  public void setTransactionDate(String transactionDate) {
     this.transactionDate = transactionDate;
   }
 

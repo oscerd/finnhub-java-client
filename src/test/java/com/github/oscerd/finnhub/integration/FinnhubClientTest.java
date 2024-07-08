@@ -150,4 +150,13 @@ public class FinnhubClientTest {
         assertNotNull(metrics);
         assertNotNull(metrics.getMetric());
     }
+
+    @Test
+    @EnabledIfEnvironmentVariable(named = "FINNHUB_TOKEN", matches = ".*")
+    void invocationInsiderTransactions() throws ParseException, IOException {
+        FinnhubClient client = new FinnhubClient(System.getenv("FINNHUB_TOKEN"));
+        InsiderTransactions insiderTransactions = client.insiderTransactions("TSLA", null, null);
+        assertNotNull(insiderTransactions);
+        assertNotNull(insiderTransactions.getData().size() > 0);
+    }
 }
