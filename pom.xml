@@ -32,7 +32,7 @@
         <jakarta.annotation.version>3.0.0</jakarta.annotation.version>
         <log4j.version>2.24.0</log4j.version>
         <swagger.annotations.version>2.2.22</swagger.annotations.version>
-        <mockito.version>5.12.0</mockito.version>
+        <mockito.version>5.14.1</mockito.version>
     </properties>
 
     <licenses>
